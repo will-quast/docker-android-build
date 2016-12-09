@@ -5,7 +5,7 @@ uacf_generic_pipeline {
     disable_publish = false
 
     images = [
-        tizen_sdk: [
+        mmf_android_docker: [
             DOCKER_IMAGE_NAME: "uarun/android-sdk",
             DOCKER_CONTEXT_PATH: ".",
             DOCKER_FILE: "./Dockerfile",
