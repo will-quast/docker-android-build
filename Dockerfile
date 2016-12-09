@@ -36,19 +36,19 @@ CMD ["bash"]
 COPY scripts/ scripts/
 
 # Install Android SDK
-RUN wget http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \
+RUN wget -nv http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \
   tar -xzf android-sdk_r24.4.1-linux.tgz  -C /opt && \
   rm android-sdk_r24.4.1-linux.tgz
   
 # Install Android NDK
-RUN wget https://dl.google.com/android/repository/android-ndk-r13b-linux-x86_64.zip && \
-  unzip android-ndk-r13b-linux-x86_64.zip && \
+RUN wget -nv https://dl.google.com/android/repository/android-ndk-r13b-linux-x86_64.zip && \
+  unzip -q android-ndk-r13b-linux-x86_64.zip && \
   mv android-ndk-r13b /opt/ && \
   rm android-ndk-r13b-linux-x86_64.zip
 
 # Install Gradle
-RUN wget https://services.gradle.org/distributions/gradle-2.14.1-bin.zip && \
-  unzip gradle-2.14.1-bin.zip &&\
+RUN wget -nv https://services.gradle.org/distributions/gradle-2.14.1-bin.zip && \
+  unzip -q gradle-2.14.1-bin.zip &&\
   mv gradle-2.14.1 /opt/ && \
   rm gradle-2.14.1-bin.zip
 
@@ -65,4 +65,8 @@ ENV PATH $PATH:$GRADLE_HOME/bin
 # Update Android sdk
 RUN ./scripts/accept-licenses "android update sdk --no-ui --all --filter build-tools-25.0.1,android-25,extra-google-google_play_services,extra-google-m2repository,extra-google-play_billing,extra-intel-Hardware_Accelerated_Execution_Manager,sys-img-x86_64-google_apis-25" "android-sdk-preview-license-d099d938|android-sdk-license-c81a61d9"
 
+
 WORKDIR /workspace
+
+
+#  /root/.gradle
