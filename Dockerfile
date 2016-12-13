@@ -64,7 +64,7 @@ ENV PATH $PATH:$ANDROID_NDK_HOME
 ENV PATH $PATH:$GRADLE_HOME/bin
 
 # Update Android sdk
-RUN ./scripts/accept-licenses "android update sdk --no-ui --all --filter build-tools-25.0.2,android-24,android-25,extra-google-google_play_services,extra-google-m2repository,extra-google-play_billing,extra-intel-Hardware_Accelerated_Execution_Manager,sys-img-x86_64-google_apis-25" "android-sdk-preview-license-d099d938|android-sdk-license-c81a61d9"
+RUN ./scripts/accept-licenses "android update sdk --no-ui --all --filter build-tools-25.0.0,build-tools-25.0.1,build-tools-25.0.2,android-24,android-25,extra-google-google_play_services,extra-google-m2repository,extra-google-play_billing,extra-intel-Hardware_Accelerated_Execution_Manager,sys-img-x86_64-google_apis-25" "android-sdk-preview-license-d099d938|android-sdk-license-c81a61d9"
 
 COPY licenses/ licenses/
 RUN mv licenses $ANDROID_HOME/
