@@ -33,7 +33,9 @@ CMD ["bash"]
 #USER worker
 #WORKDIR /home/worker
 
-COPY scripts/ scripts/
+ADD scripts/accept-licenses /usr/local/bin/
+ADD scripts/start-emulator /usr/local/bin/
+ADD scripts/wait_for_emulator /usr/local/bin/
 
 # Install Android SDK
 RUN wget -nv http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \
@@ -64,14 +66,14 @@ ENV PATH $PATH:$ANDROID_NDK_HOME
 ENV PATH $PATH:$GRADLE_HOME/bin
 
 # Update Android sdk
-RUN ./scripts/accept-licenses "android update sdk --no-ui --all --filter \
+RUN accept-licenses "android update sdk --no-ui --all --filter \
 tools,platform-tools,\
 build-tools-25.0.0,build-tools-25.0.1,build-tools-25.0.2,\
 android-24,android-25,\
 extra-android-m2repository,extra-google-m2repository,\
 extra-google-google_play_services,extra-google-play_billing,\
 sys-img-armeabi-v7a-google_apis-24,sys-img-armeabi-v7a-google_apis-25" \
-  "android-sdk-preview-license-d099d938|android-sdk-license-c81a61d9"
+"android-sdk-preview-license-d099d938|android-sdk-license-c81a61d9"
 
 COPY licenses/ licenses/
 RUN mv licenses $ANDROID_HOME/
