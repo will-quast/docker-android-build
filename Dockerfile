@@ -64,7 +64,7 @@ ENV PATH $PATH:$ANDROID_NDK_HOME
 ENV PATH $PATH:$GRADLE_HOME/bin
 
 # Update Android sdk
-RUN ./scripts/accept-licenses "android update sdk --no-ui --all --filter 
+RUN ./scripts/accept-licenses "android update sdk --no-ui --all --filter \
   tools,platform-tools,\
   build-tools-25.0.0,build-tools-25.0.1,build-tools-25.0.2,\
   android-24,android-25,\
