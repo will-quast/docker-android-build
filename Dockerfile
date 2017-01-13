@@ -35,7 +35,6 @@ CMD ["bash"]
 
 ADD scripts/accept-licenses /usr/local/bin/
 ADD scripts/start-emulator /usr/local/bin/
-ADD scripts/wait_for_emulator /usr/local/bin/
 
 # Install Android SDK
 RUN wget -nv http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \

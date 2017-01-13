@@ -4,8 +4,24 @@ if [ $# -gt 0 ]; then
   CMD=$1
   PORT=5554
   echo "Starting emulator[$PORT]..."
-  emulator -avd test_avd -no-skin -no-audio -no-window -port $PORT &
-  wait-for-emulator
+  emulator64-arm -avd test_avd -no-skin -no-audio -no-window -force-32bit -port $PORT &
+  
+  echo "Waiting for emulator[$PORT]..."
+  bootanim=""
+  failcounter=0
+  until [[ "$bootanim" =~ "stopped" ]]; do
+  bootanim=`adb -e shell getprop init.svc.bootanim 2>&1`
+  echo "$bootanim"
+  if [[ "$bootanim" =~ "not found" ]]; then
+    let "failcounter += 1"
+    if [[ $failcounter -gt 15 ]]; then
+      echo "Failed to start emulator"
+      exit 1
+    fi
+  fi
+  sleep 1
+  echo "Started emulator[$PORT]."
+  
   $CMD
 else
   echo "No command is specified"
