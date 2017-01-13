@@ -64,12 +64,19 @@ ENV PATH $PATH:$ANDROID_NDK_HOME
 ENV PATH $PATH:$GRADLE_HOME/bin
 
 # Update Android sdk
-RUN ./scripts/accept-licenses "android update sdk --no-ui --all --filter build-tools-25.0.0,build-tools-25.0.1,build-tools-25.0.2,android-24,android-25,extra-google-google_play_services,extra-google-m2repository,extra-google-play_billing,extra-intel-Hardware_Accelerated_Execution_Manager,sys-img-x86_64-google_apis-25" "android-sdk-preview-license-d099d938|android-sdk-license-c81a61d9"
+RUN ./scripts/accept-licenses "android update sdk --no-ui --all --filter 
+  tools,platform-tools,\
+  build-tools-25.0.0,build-tools-25.0.1,build-tools-25.0.2,\
+  android-24,android-25,\
+  extra-android-m2repository,extra-google-m2repository,\
+  extra-google-google_play_services,extra-google-play_billing,\
+  sys-img-armeabi-v7a-google_apis-24" \
+  "android-sdk-preview-license-d099d938|android-sdk-license-c81a61d9"
 
 COPY licenses/ licenses/
 RUN mv licenses $ANDROID_HOME/
 
+RUN android create avd --name test_avd --target android-24 --abi google_apis/armeabi-v7a --device "Nexus 5" --snapshot
+# emulator64-arm -no-window -no-skin -no-audio -avd test_avd -port 5554 &
+
 WORKDIR /workspace
-
-
-#  /root/.gradle
