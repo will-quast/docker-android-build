@@ -1,27 +1,26 @@
 #!/bin/bash
+set -e
 
-if [ $# -gt 0 ]; then
-  CMD=$1
-  PORT=5554
-  echo "Starting emulator[$PORT]..."
-  emulator64-arm -avd test_avd -no-audio -no-window -force-32bit -port $PORT &
-  
-  echo "Waiting for emulator[$PORT]..."
-  bootanim=""
-  counter=0
-  until [[ "$bootanim" =~ "stopped" ]]; do
-    bootanim=`adb -e shell getprop init.svc.bootanim 2>&1`
-    echo "Waiting for the emulator to finish loading ($counter): $bootanim"
-    let counter++
-    if [[ "$counter" -gt 600 ]]; then
-      echo "Timeout waiting for the emulator. Abort."
-      exit 1
-    fi
-    sleep 1
-  done
-  echo "Started emulator[$PORT]."
-  
-  $CMD
-else
-  echo "No command is specified. Fail."
+if [ $# -ne 1 ]; then
+  echo "Error: Missing avd parameter."
+  exit 1
 fi
+
+AVD=$1
+echo "Starting emulator $AVD..."
+emulator64-arm -avd $AVD -no-audio -no-window -force-32bit -port 5554 &
+
+echo "Waiting for emulator $AVD..."
+bootanim=""
+counter=0
+until [[ "$bootanim" =~ "stopped" ]]; do
+  bootanim=`adb -e shell getprop init.svc.bootanim 2>&1`
+  echo "Waiting for the emulator to finish loading ($counter): $bootanim"
+  let counter++
+  if [[ "$counter" -gt 600 ]]; then
+    echo "Timeout waiting for the emulator. Abort."
+    exit 1
+  fi
+  sleep 1
+done
+echo "Started emulator $AVD."

@@ -77,7 +77,6 @@ sys-img-armeabi-v7a-google_apis-24,sys-img-armeabi-v7a-google_apis-25" \
 COPY licenses/ licenses/
 RUN mv licenses $ANDROID_HOME/
 
-RUN android create avd --name test_avd --target android-24 --abi google_apis/armeabi-v7a --device "Nexus 5" --snapshot
-# emulator64-arm -no-window -no-skin -no-audio -avd test_avd -port 5554 &
+RUN android create avd --name avd-android-24 --target android-24 --abi google_apis/armeabi-v7a --device "Nexus 5" --snapshot
 
 WORKDIR /workspace
