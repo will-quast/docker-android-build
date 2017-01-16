@@ -7,7 +7,7 @@ fi
 
 AVD=$1
 echo "Starting emulator $AVD..."
-emulator64-arm -avd $AVD -no-audio -no-window -force-32bit -port 5554 &
+emulator64-arm -avd $AVD -no-audio -no-window -force-32bit -partition-size 1024 -port 5554 &
 
 echo "Waiting for emulator $AVD..."
 bootanim=""
