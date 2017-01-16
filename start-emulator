@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 if [ $# -ne 1 ]; then
   echo "Error: Missing avd parameter."
