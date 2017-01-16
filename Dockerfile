@@ -10,8 +10,9 @@ RUN \
   apt-get update && \
   apt-get install -y oracle-java8-installer && \
   apt-get install -y software-properties-common python-software-properties && \
-  apt-get install -y bzip2 unzip openssh-client git curl expect build-essential && \
-  apt-get install -y libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1 libqt5widgets5 && \
+  apt-get install -y bzip2 unzip openssh-client git curl expect build-essential telnet && \
+  apt-get install -y libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1 && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y libqt5widgets5 && \
   apt-get install -y x11vnc xvfb && \
   rm -rf /var/lib/apt/lists/* && \
   rm -rf /var/cache/oracle-jdk8-installer
@@ -21,9 +22,6 @@ ENV JAVA_HOME=/usr/lib/jvm/java-8-oracle
 
 # Setup vnc and set a password
 RUN mkdir ~/.vnc && x11vnc -storepasswd 1234 ~/.vnc/passwd
-
-# Define display x11 server to use TCP for emulator
-#ENV DISPLAY=localhost:0
 
 # Define default command.
 CMD ["bash"]
@@ -35,6 +33,7 @@ CMD ["bash"]
 
 ADD accept-licenses /usr/local/bin/
 ADD start-emulator /usr/local/bin/
+ADD stop-emulator /usr/local/bin/
 
 # Install Android SDK
 RUN wget -nv http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \
@@ -63,6 +62,8 @@ ENV PATH $PATH:$ANDROID_SDK_HOME/tools
 ENV PATH $PATH:$ANDROID_SDK_HOME/platform-tools
 ENV PATH $PATH:$ANDROID_NDK_HOME
 ENV PATH $PATH:$GRADLE_HOME/bin
+ENV QT_QPA_PLATFORM offscreen
+ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${ANDROID_HOME}/tools/lib64
 
 # Update Android sdk
 RUN accept-licenses "android update sdk --no-ui --all --filter \
@@ -77,6 +78,6 @@ sys-img-armeabi-v7a-google_apis-24,sys-img-armeabi-v7a-google_apis-25" \
 COPY licenses/ licenses/
 RUN mv licenses $ANDROID_HOME/
 
-RUN android create avd --name avd-android-24 --target android-24 --abi google_apis/armeabi-v7a --device "Nexus 5" --snapshot
+RUN android create avd --name avd-android-24 --target android-24 --abi google_apis/armeabi-v7a --device "Nexus 5"
 
 WORKDIR /workspace
