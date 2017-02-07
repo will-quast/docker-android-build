@@ -3,6 +3,7 @@ FROM ubuntu:16.04
 
 # Install dependencies
 RUN \
+  export DEBIAN_FRONTEND=noninteractive && \
   apt-get update && \
   apt-get install -y software-properties-common && \
   echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
@@ -66,6 +67,12 @@ ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${ANDROID_HOME}/tools/lib64
 # Extra tools for the Android Emulator
 ADD start-emulator /usr/local/bin/
 ADD stop-emulator /usr/local/bin/
+
+# Setup KVM for fast x86 emulation
+RUN \
+  adduser root kvm && \
+  adduser root libvirtd && \
+  virsh -c qemu:///system list
 
 # Create an Android Virtual Device image for the Android Emulator
 RUN android create avd --name avd-android-24 --target android-24 --abi google_apis/x86_64 --device "Nexus 5"
