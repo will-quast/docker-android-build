@@ -53,7 +53,7 @@ RUN wget -nv https://services.gradle.org/distributions/gradle-2.14.1-bin.zip && 
 
 # Setup environment variables
 ENV ANDROID_SDK_HOME /opt/android-sdk-linux
-ENV ANDROID_NDK_HOME /opt/android-ndk-r13b
+ENV ANDROID_NDK_HOME $ANDROID_SDK_HOME/ndk-bundle
 ENV ANDROID_HOME $ANDROID_SDK_HOME
 ENV GRADLE_HOME /opt/gradle-2.14.1
 ENV GRADLE_USER_HOME /root/.gradle
