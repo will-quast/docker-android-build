@@ -71,8 +71,7 @@ ADD stop-emulator /usr/local/bin/
 # Setup KVM for fast x86 emulation
 RUN \
   adduser root kvm && \
-  adduser root libvirtd && \
-  virsh -c qemu:///system list
+  adduser root libvirtd
 
 # Create an Android Virtual Device image for the Android Emulator
 RUN android create avd --name avd-android-24 --target android-24 --abi google_apis/x86_64 --device "Nexus 5"
