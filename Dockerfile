@@ -11,9 +11,9 @@ RUN \
   apt-get install -y oracle-java8-installer && \
   apt-get install -y software-properties-common python-software-properties && \
   apt-get install -y bzip2 unzip openssh-client git curl expect build-essential telnet && \
-  apt-get install -y libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1 && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y libqt5widgets5 && \
+  apt-get install -y libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1 libqt5widgets5 && \
   apt-get install -y x11vnc xvfb && \
+  apt-get install -y cpu-checker qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils && \
   rm -rf /var/lib/apt/lists/* && \
   rm -rf /var/cache/oracle-jdk8-installer
 
@@ -26,25 +26,23 @@ RUN mkdir ~/.vnc && x11vnc -storepasswd 1234 ~/.vnc/passwd
 # Define default command.
 CMD ["bash"]
 
-# Install android-sdk studio and all packages
-#RUN useradd -ms /bin/bash worker
-#USER worker
-#WORKDIR /home/worker
-
-ADD accept-licenses /usr/local/bin/
-ADD start-emulator /usr/local/bin/
-ADD stop-emulator /usr/local/bin/
-
 # Install Android SDK
-RUN wget -nv http://dl.google.com/android/android-sdk_r24.4.1-linux.tgz && \
-  tar -xzf android-sdk_r24.4.1-linux.tgz  -C /opt && \
-  rm android-sdk_r24.4.1-linux.tgz
+RUN wget -nv https://dl.google.com/android/repository/tools_r25.2.3-linux.zip && \
+  unzip -q tools_r25.2.3-linux.zip && \
+  mkdir /opt/android-sdk-linux && \
+  mv tools /opt/android-sdk-linux && \
+  rm tools_r25.2.3-linux.zip && \
+  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "tools") && \
+  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "platform-tools") && \
+  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "build-tools;25.0.0" "build-tools;25.0.1" "build-tools;25.0.2") && \
+  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "platforms;android-24" "platforms;android-25") && \
+  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;m2repository") && \
+  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "extras;google;google_play_services" "extras;google;play_billing") && \
+  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "ndk-bundle") && \
+  (echo y | /opt/android-sdk-linux/tools/android update sdk --no-ui --all --filter sys-img-x86_64-google_apis-24)
   
-# Install Android NDK
-RUN wget -nv https://dl.google.com/android/repository/android-ndk-r13b-linux-x86_64.zip && \
-  unzip -q android-ndk-r13b-linux-x86_64.zip && \
-  mv android-ndk-r13b /opt/ && \
-  rm android-ndk-r13b-linux-x86_64.zip
+#  (echo y | /opt/android-sdk-linux/tools/android update sdk --no-ui --all --filter sys-img-armeabi-v7a-google_apis-24)
+#  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "system-images;android-24;google_apis;armeabi-v7a")
 
 # Install Gradle
 RUN wget -nv https://services.gradle.org/distributions/gradle-2.14.1-bin.zip && \
@@ -65,19 +63,11 @@ ENV PATH $PATH:$GRADLE_HOME/bin
 ENV QT_QPA_PLATFORM offscreen
 ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${ANDROID_HOME}/tools/lib64
 
-# Update Android sdk
-RUN accept-licenses "android update sdk --no-ui --all --filter \
-tools,platform-tools,\
-build-tools-25.0.0,build-tools-25.0.1,build-tools-25.0.2,\
-android-24,android-25,\
-extra-android-m2repository,extra-google-m2repository,\
-extra-google-google_play_services,extra-google-play_billing,\
-sys-img-armeabi-v7a-google_apis-24,sys-img-armeabi-v7a-google_apis-25" \
-"android-sdk-preview-license-d099d938|android-sdk-license-c81a61d9"
+# Extra tools for the Android Emulator
+ADD start-emulator /usr/local/bin/
+ADD stop-emulator /usr/local/bin/
 
-COPY licenses/ licenses/
-RUN mv licenses $ANDROID_HOME/
-
-RUN android create avd --name avd-android-24 --target android-24 --abi google_apis/armeabi-v7a --device "Nexus 5"
+# Create an Android Virtual Device image for the Android Emulator
+RUN android create avd --name avd-android-24 --target android-24 --abi google_apis/x86_64 --device "Nexus 5"
 
 WORKDIR /workspace
