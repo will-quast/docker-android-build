@@ -28,7 +28,8 @@ RUN mkdir ~/.vnc && x11vnc -storepasswd 1234 ~/.vnc/passwd
 CMD ["bash"]
 
 # Install Android SDK
-RUN wget -nv https://dl.google.com/android/repository/tools_r25.2.3-linux.zip && \
+RUN \
+  wget -nv https://dl.google.com/android/repository/tools_r25.2.3-linux.zip && \
   unzip -q tools_r25.2.3-linux.zip && \
   mkdir /opt/android-sdk-linux && \
   mv tools /opt/android-sdk-linux && \
@@ -46,7 +47,8 @@ RUN wget -nv https://dl.google.com/android/repository/tools_r25.2.3-linux.zip &&
 #  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "system-images;android-24;google_apis;armeabi-v7a")
 
 # Install Gradle
-RUN wget -nv https://services.gradle.org/distributions/gradle-2.14.1-bin.zip && \
+RUN \
+  wget -nv https://services.gradle.org/distributions/gradle-2.14.1-bin.zip && \
   unzip -q gradle-2.14.1-bin.zip &&\
   mv gradle-2.14.1 /opt/ && \
   rm gradle-2.14.1-bin.zip
