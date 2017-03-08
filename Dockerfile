@@ -48,16 +48,16 @@ RUN \
 
 # Install Gradle
 RUN \
-  wget -nv https://services.gradle.org/distributions/gradle-2.14.1-bin.zip && \
-  unzip -q gradle-2.14.1-bin.zip &&\
-  mv gradle-2.14.1 /opt/ && \
-  rm gradle-2.14.1-bin.zip
+  wget -nv https://services.gradle.org/distributions/gradle-3.3-bin.zip && \
+  unzip -q gradle-3.3-bin.zip &&\
+  mv gradle-3.3 /opt/ && \
+  rm gradle-3.3-bin.zip
 
 # Setup environment variables
 ENV ANDROID_SDK_HOME /opt/android-sdk-linux
 ENV ANDROID_NDK_HOME $ANDROID_SDK_HOME/ndk-bundle
 ENV ANDROID_HOME $ANDROID_SDK_HOME
-ENV GRADLE_HOME /opt/gradle-2.14.1
+ENV GRADLE_HOME /opt/gradle-3.3
 ENV GRADLE_USER_HOME /root/.gradle
 ENV PATH $PATH:$ANDROID_SDK_HOME/tools
 ENV PATH $PATH:$ANDROID_SDK_HOME/platform-tools
