@@ -41,10 +41,8 @@ RUN \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;m2repository") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "extras;google;google_play_services" "extras;google;play_billing") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "ndk-bundle") && \
-  (echo y | /opt/android-sdk-linux/tools/android update sdk --no-ui --all --filter sys-img-x86_64-google_apis-24)
-  
-#  (echo y | /opt/android-sdk-linux/tools/android update sdk --no-ui --all --filter sys-img-armeabi-v7a-google_apis-24)
-#  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "system-images;android-24;google_apis;armeabi-v7a")
+  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "emulator") && \
+  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "system-images;android-24;google_apis;x86_64")
 
 # Install Gradle
 RUN \
@@ -60,6 +58,7 @@ ENV ANDROID_HOME $ANDROID_SDK_HOME
 ENV GRADLE_HOME /opt/gradle-3.3
 ENV GRADLE_USER_HOME /root/.gradle
 ENV PATH $PATH:$ANDROID_SDK_HOME/tools
+ENV PATH $PATH:$ANDROID_SDK_HOME/tools/bin
 ENV PATH $PATH:$ANDROID_SDK_HOME/platform-tools
 ENV PATH $PATH:$ANDROID_NDK_HOME
 ENV PATH $PATH:$GRADLE_HOME/bin
@@ -76,6 +75,6 @@ RUN \
   adduser root libvirtd
 
 # Create an Android Virtual Device image for the Android Emulator
-RUN android create avd --name avd-android-24 --target android-24 --abi google_apis/x86_64 --device "Nexus 5"
+RUN avdmanager create avd --name avd-android-24 --package "system-images;android-24;google_apis;x86_64" --tag "google_apis" --device "Nexus 5"
 
 WORKDIR /workspace
