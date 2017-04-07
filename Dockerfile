@@ -36,7 +36,7 @@ RUN \
   rm tools_r25.2.3-linux.zip && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "tools") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "platform-tools") && \
-  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "build-tools;25.0.0" "build-tools;25.0.1" "build-tools;25.0.2") && \
+  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "build-tools;25.0.1" "build-tools;25.0.2") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "platforms;android-24" "platforms;android-25") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;m2repository") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "extras;google;google_play_services" "extras;google;play_billing") && \
