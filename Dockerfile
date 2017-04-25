@@ -13,16 +13,12 @@ RUN \
   apt-get install -y software-properties-common python-software-properties && \
   apt-get install -y bzip2 unzip openssh-client git curl expect build-essential telnet && \
   apt-get install -y libc6-i386 lib32stdc++6 lib32gcc1 lib32ncurses5 lib32z1 libqt5widgets5 && \
-  apt-get install -y x11vnc xvfb && \
   apt-get install -y cpu-checker qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils && \
   rm -rf /var/lib/apt/lists/* && \
   rm -rf /var/cache/oracle-jdk8-installer
 
 # Define commonly used JAVA_HOME variable
 ENV JAVA_HOME=/usr/lib/jvm/java-8-oracle
-
-# Setup vnc and set a password
-RUN mkdir ~/.vnc && x11vnc -storepasswd 1234 ~/.vnc/passwd
 
 # Define default command.
 CMD ["bash"]
