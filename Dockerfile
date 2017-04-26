@@ -60,7 +60,7 @@ ENV PATH $PATH:$ANDROID_SDK_HOME/emulator
 ENV PATH $PATH:$ANDROID_NDK_HOME
 ENV PATH $PATH:$GRADLE_HOME/bin
 ENV QT_QPA_PLATFORM offscreen
-ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${ANDROID_HOME}/emulator/lib64
+ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:${ANDROID_HOME}/emulator/lib64/qt/lib
 
 # Extra tools for the Android Emulator
 ADD start-emulator /usr/local/bin/
