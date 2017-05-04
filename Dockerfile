@@ -75,3 +75,4 @@ RUN \
 RUN avdmanager create avd --name avd-android-24 --package "system-images;android-24;google_apis;x86_64" --tag "google_apis" --device "Nexus 5"
 
 WORKDIR /workspace
+
