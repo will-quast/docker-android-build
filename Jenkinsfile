@@ -10,6 +10,7 @@ uacf_generic_pipeline {
             DOCKER_CONTEXT_PATH: ".",
             DOCKER_FILE: "./Dockerfile",
             DOCKER_TAGS: "platform-24",
+            SLAVE: 'android',
         ]
     ]
 }
