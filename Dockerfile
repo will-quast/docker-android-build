@@ -72,7 +72,8 @@ RUN \
   adduser root libvirtd
 
 # Create an Android Virtual Device image for the Android Emulator
-RUN avdmanager create avd --name avd-android-24 --package "system-images;android-24;google_apis;x86_64" --tag "google_apis" --device "Nexus 5"
+#TODO: avd is not currently used for tests so dont create one...
+#RUN avdmanager create avd --name avd-android-24 --package "system-images;android-24;google_apis;x86_64" --tag "google_apis" --device "Nexus 5"
 
 WORKDIR /workspace
 
