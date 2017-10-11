@@ -9,7 +9,7 @@ uacf_generic_pipeline {
             DOCKER_IMAGE_NAME: "uarun/android-sdk",
             DOCKER_CONTEXT_PATH: ".",
             DOCKER_FILE: "./Dockerfile",
-            DOCKER_TAGS: “mmf-android“,
+            DOCKER_TAGS: "mmf-android",
             SLAVE: 'android',
         ]
     ]
