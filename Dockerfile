@@ -35,7 +35,6 @@ RUN \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "build-tools;25.0.3" "build-tools;26.0.0" "build-tools;26.0.1") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "platforms;android-25" "platforms;android-26") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;m2repository") && \
-  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "extras;google;google_play_services" "extras;google;play_billing") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "ndk-bundle") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "emulator") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "system-images;android-24;google_apis;x86_64")
