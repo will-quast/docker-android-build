@@ -32,7 +32,7 @@ RUN \
   rm sdk-tools-linux-3859397.zip && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "tools") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "platform-tools") && \
-  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "build-tools;25.0.3" "build-tools;26.0.0" "build-tools;26.0.1") && \
+  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "build-tools;26.0.0" "build-tools;26.0.1" "build-tools;27.0.1") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "platforms;android-25" "platforms;android-26") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;m2repository") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "ndk-bundle") && \
@@ -41,16 +41,16 @@ RUN \
 
 # Install Gradle
 RUN \
-  wget -nv https://services.gradle.org/distributions/gradle-3.3-bin.zip && \
-  unzip -q gradle-3.3-bin.zip &&\
-  mv gradle-3.3 /opt/ && \
-  rm gradle-3.3-bin.zip
+  wget -nv https\://services.gradle.org/distributions/gradle-4.1-all.zip && \
+  unzip -q gradle-4.1-all.zip &&\
+  mv gradle-4.1 /opt/ && \
+  rm gradle-4.1-all.zip
 
 # Setup environment variables
 ENV ANDROID_SDK_HOME /opt/android-sdk-linux
 ENV ANDROID_NDK_HOME $ANDROID_SDK_HOME/ndk-bundle
 ENV ANDROID_HOME $ANDROID_SDK_HOME
-ENV GRADLE_HOME /opt/gradle-3.3
+ENV GRADLE_HOME /opt/gradle-4.1
 ENV GRADLE_USER_HOME /root/.gradle
 ENV PATH $PATH:$ANDROID_SDK_HOME/tools
 ENV PATH $PATH:$ANDROID_SDK_HOME/tools/bin
