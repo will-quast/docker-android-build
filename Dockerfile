@@ -32,8 +32,8 @@ RUN \
   rm sdk-tools-linux-3859397.zip && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "tools") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "platform-tools") && \
-  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "build-tools;26.0.0" "build-tools;26.0.1" "build-tools;27.0.1") && \
-  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "platforms;android-25" "platforms;android-26") && \
+  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "build-tools;26.0.1" "build-tools;27.0.1" "build-tools;27.0.3") && \
+  (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "platforms;android-26" "platforms;android-27") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "extras;android;m2repository" "extras;google;m2repository") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "ndk-bundle") && \
   (echo y | /opt/android-sdk-linux/tools/bin/sdkmanager "emulator") && \
